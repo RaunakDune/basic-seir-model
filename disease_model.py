@@ -12,7 +12,10 @@ stages = ['S','E','I','R']
 class DiseaseAgent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
-        self.state = random.randint(0, 1)
+        if random.randint(0,100) < 10:
+            self.state = 2
+        else:
+            self.state = random.randint(0, 1)
     
     def step(self):
         self.move()
@@ -24,7 +27,10 @@ class DiseaseAgent(Agent):
 
         if (len(neighbours) > 1):
             next_agent = self.random.choice(neighbours)
-            if self.state == 4 or next_agent.state == 4:
+            if self.state == 3:
+                return
+            if next_agent.state == 3 and self.state != 3:
+                self.state = (self.state + 1) % 4
                 return
             if (next_agent.state > 1) and (self.state == 0):
                 self.state += 1
