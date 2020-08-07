@@ -9,6 +9,18 @@ import random
 
 stages = ['S','E','I','R']
 
+def infection_rates(model):
+    agent_state = [ agent.state for agent in model.schedule.agents]
+
+    N = model.num_agents
+    stages_dict = dict.fromkeys(stages, 0)
+
+    for agents in agent_state:
+        stages_dict[str(stages[agents])] += 1
+
+    return stages_dict
+
+
 class DiseaseAgent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
@@ -65,6 +77,7 @@ class DiseaseModel(Model):
             y = self.random.randrange(self.grid.height)
             self.grid.place_agent(a, (x, y))
             self.datacollector = DataCollector(
+                model_reporters={"Current State": infection_rates},
                 agent_reporters={"State":"state"}
             )
     
