@@ -1,7 +1,7 @@
 from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.ModularVisualization import ModularServer
 
-from disease_model import *
+from disease_model import DiseaseModel
 
 def agent_portrayal(agent):
     portrayal = {"Shape": "circle",
